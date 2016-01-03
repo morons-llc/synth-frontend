@@ -1,0 +1,11 @@
+{
+  "name": "synth-frontend",
+  "repository": "https://github.com/morons-llc/synth-frontend",
+  "version": "1.0.0",
+  "description": "Synth frontend site",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "David Balatero <dbalatero@gmail.com>",
+  "license": "MIT"
+}
