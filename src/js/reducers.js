@@ -5,8 +5,8 @@ function rootReducer(state = {}, action) {
   return state;
 }
 
-const patchApp = combineReducers({
+const patchAppReducer = combineReducers({
   rootReducer
 });
 
-export default patchApp;
+export default patchAppReducer;
