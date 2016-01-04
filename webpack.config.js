@@ -32,7 +32,6 @@ module.exports = {
         loaders: [
           'style',
           'css',
-          'autoprefixer?browsers=last 3 versions',
           'sass?outputStyle=expanded'
         ]
       },
