@@ -6,7 +6,11 @@ export default class PatchApp extends Component {
   render() {
     return (
       <section className="oscillator">
-        <MIDIRangeSelector name="LFO Frequency" path="osc.osc1.lfo" />
+        <MIDIRangeSelector
+          name="LFO Frequency"
+          path="osc.osc1.lfo"
+          onChange={(event) => console.log(event)}
+        />
       </section>
     )
   }
