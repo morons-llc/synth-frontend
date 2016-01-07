@@ -1,12 +1,27 @@
 import { combineReducers } from 'redux';
 
-function rootReducer(state = {}, action) {
-  console.log('state:', state, 'action', action);
-  return state;
+const initialState = {
+  currentPatch: {
+    name: 'RolandJuno106',
+    state: {
+      lfo: 0
+    }
+  }
+};
+
+function PatchAppReducer(state = initialState, action) {
+  switch (action.type) {
+  case 'SET_PARAM':
+    return Object.assign({}, state, {
+      currentPatch: {
+        state: {
+          [action.path]: action.value
+        }
+      }
+    })
+  default:
+    return state;
+  }
 }
 
-const patchAppReducer = combineReducers({
-  rootReducer
-});
-
-export default patchAppReducer;
+export default PatchAppReducer;
