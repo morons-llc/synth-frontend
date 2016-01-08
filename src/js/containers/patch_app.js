@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react';
-import MIDIRangeSelector from '../components/midi_range_selector';
-import { connect } from 'react-redux';
+import React, { PropTypes } from 'react'
+import MIDIRangeSelector from '../components/midi_range_selector'
+import { connect } from 'react-redux'
 
 const PatchApp = (props) => {
   return (
@@ -26,7 +26,7 @@ const PatchApp = (props) => {
 function passPatchState(store) {
   return {
     patchState: store.currentPatch.state
-  };
+  }
 }
 
-export default connect(passPatchState)(PatchApp);
+export default connect(passPatchState)(PatchApp)

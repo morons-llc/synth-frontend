@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux'
 
 const initialState = {
   currentPatch: {
@@ -7,7 +7,7 @@ const initialState = {
       lfo: 0
     }
   }
-};
+}
 
 function PatchAppReducer(state = initialState, action) {
   switch (action.type) {
@@ -20,8 +20,8 @@ function PatchAppReducer(state = initialState, action) {
       }
     })
   default:
-    return state;
+    return state
   }
 }
 
-export default PatchAppReducer;
+export default PatchAppReducer

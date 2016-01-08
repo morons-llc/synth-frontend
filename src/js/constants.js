@@ -3,4 +3,4 @@ const constants = {
   max_param_val: 127
 }
 
-export default constants;
+export default constants

@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react';
-import constants from '../constants';
+import React, { PropTypes } from 'react'
+import constants from '../constants'
 
 const MIDIRangeSelector = (props) => {
   return (
@@ -25,6 +25,6 @@ MIDIRangeSelector.propTypes = {
 
   minVal: PropTypes.number,
   maxVal: PropTypes.number
-};
+}
 
-export default MIDIRangeSelector;
+export default MIDIRangeSelector
