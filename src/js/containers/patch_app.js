@@ -7,13 +7,13 @@ const PatchApp = (props) => {
     <section className="oscillator">
       <MIDIRangeSelector
         name="LFO Frequency"
-        path="lfo"
-        value={ props.patchState.lfo }
+        path='osc.osc1.lfo'
+        value={ props.patchState.getIn(['osc', 'osc1', 'lfo']) }
         onChange={
           (event) => {
             props.dispatch({
               type: 'SET_PARAM',
-              path: 'lfo',
+              path: 'osc.osc1.lfo',
               value: parseInt(event.target.value, 10)
             })
           }
@@ -25,7 +25,7 @@ const PatchApp = (props) => {
 
 function passPatchState(store) {
   return {
-    patchState: store.currentPatch.state
+    patchState: store.getIn(['currentPatch', 'state'])
   }
 }
 
