@@ -1,9 +1,9 @@
-import ParamSpec from "../../src/js/util/param_spec"
+import RangeMapper from "../../src/js/util/range_mapper"
 
-describe('ParamSpec', function () {
+describe('RangeMapper', function () {
   context('with clamping', function () {
     beforeEach(function () {
-      this.subject = ParamSpec(0, 127, 0, 10)
+      this.subject = RangeMapper(0, 127, 0, 10)
     })
 
     describe('map', function () {
@@ -53,7 +53,7 @@ describe('ParamSpec', function () {
 
   context('without clamping', function () {
     beforeEach(function () {
-      this.subject = ParamSpec(0, 127, 0, 10, false)
+      this.subject = RangeMapper(0, 127, 0, 10, false)
     })
 
     describe('map', function () {

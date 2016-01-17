@@ -1,4 +1,4 @@
-function ParamSpec(sourceLow, sourceHigh, distLow, distHigh, clamp = true) {
+function RangeMapper(sourceLow, sourceHigh, distLow, distHigh, clamp = true) {
   const domain = sourceHigh - sourceLow
   const range = distHigh - distLow
   let map
@@ -37,4 +37,4 @@ function ParamSpec(sourceLow, sourceHigh, distLow, distHigh, clamp = true) {
   return { map, unmap }
 }
 
-export default ParamSpec
+export default RangeMapper

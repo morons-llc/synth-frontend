@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
-import ParamSpec from '../util/param_spec'
+import RangeMapper from '../util/range_mapper'
 import MIDIRangeSelector from '../components/midi_range_selector'
 import { connect } from 'react-redux'
 
-const spec = ParamSpec(0, 127, 0, 10)
+const rangeMapper = RangeMapper(0, 127, 0, 10)
 
 const PatchApp = (props) => {
   function setParam(path) {
@@ -11,14 +11,14 @@ const PatchApp = (props) => {
       props.dispatch({
         type: 'SET_PARAM',
         path: path,
-        value: spec.unmap(parseInt(event.target.value, 10))
+        value: rangeMapper.unmap(parseInt(event.target.value, 10))
       })
     }
   }
 
   function rangeSelectorFor(path, name) {
     const value = props.patchState.getIn(path.split('.'))
-    const displayValue = spec.map(value)
+    const displayValue = rangeMapper.map(value)
 
     return (
       <MIDIRangeSelector
