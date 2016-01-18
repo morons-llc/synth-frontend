@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import RangeMapper from '../util/range_mapper'
-import MIDIRangeSelector from '../components/midi_range_selector'
+import RangeSelector from '../components/range_selector'
 import { connect } from 'react-redux'
 
 const rangeMapper = RangeMapper(0, 127, 0, 10)
@@ -21,7 +21,7 @@ const PatchApp = (props) => {
     const displayValue = rangeMapper.map(value)
 
     return (
-      <MIDIRangeSelector
+      <RangeSelector
         name={ name }
         path={ path }
         value={ displayValue }

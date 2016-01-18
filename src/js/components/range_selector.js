@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import constants from '../constants'
 
-const MIDIRangeSelector = (props) => {
+const RangeSelector = (props) => {
   return (
     <div className="range-selector">
       <label htmlFor={ props.path }>{ props.name }</label>
@@ -17,7 +17,7 @@ const MIDIRangeSelector = (props) => {
   )
 }
 
-MIDIRangeSelector.propTypes = {
+RangeSelector.propTypes = {
   path: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.number.isRequired,
@@ -27,4 +27,4 @@ MIDIRangeSelector.propTypes = {
   maxVal: PropTypes.number
 }
 
-export default MIDIRangeSelector
+export default RangeSelector
