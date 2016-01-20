@@ -12,7 +12,7 @@ const initialState = Immutable.fromJS({
                  subOsc: 0,
                  waveLength: '8',
                  pulseWave: true,
-                 triangleWave: true,
+                 triangleWave: false,
                  pwmType: 'manual' } },
              mod: { lfo: { rate: 0, delay: 0 } },
              filter:
