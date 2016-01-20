@@ -28,7 +28,7 @@ const initialState = Immutable.fromJS({
                          sustain: 0,
                          release: 0 },
              amp: { level: 0, modType: 'gate' },
-             chorus: { disabled: false, level: 0 } }
+             chorus: { disabled: true, level: 'I' } }
   }
 })
 
