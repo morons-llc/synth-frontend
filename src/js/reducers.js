@@ -32,11 +32,17 @@ const initialState = Immutable.fromJS({
   }
 })
 
+function setParam(state, paramSpec) {
+  const path = ['currentPatch', 'state'].concat(paramSpec.path.split("."))
+  return state.updateIn(path, () => paramSpec.value)
+}
+
 function PatchAppReducer(state = initialState, action) {
   switch (action.type) {
     case 'SET_PARAM':
-      const path = ['currentPatch', 'state'].concat(action.path.split("."))
-      return state.updateIn(path, () => action.value)
+      return setParam(state, action)
+    case 'SET_PARAMS':
+      return action.params.reduce(setParam, state)
     default:
       return state
   }
