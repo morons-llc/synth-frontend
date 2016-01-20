@@ -1,20 +1,22 @@
 import React, { PropTypes } from 'react'
 import constants from '../constants'
 
-const RangeSelector = (props) => {
-  return (
-    <div className="range-selector">
-      <label htmlFor={ props.path }>{ props.name }</label>
-      <input
-        type='number'
-        name={ props.path }
-        min={ props.minVal || 0 }
-        max={ props.maxVal || 127 }
-        onChange={ props.onChange }
-        value={ props.value }
-      />
-    </div>
-  )
+class RangeSelector extends React.Component {
+  render() {
+    return (
+      <div className="range-selector">
+        <label htmlFor={ this.props.path }>{ this.props.name }</label>
+        <input
+          type='number'
+          name={ this.props.path }
+          min={ this.props.minVal || 0 }
+          max={ this.props.maxVal || 127 }
+          onChange={ this.props.onChange }
+          value={ this.props.value }
+        />
+      </div>
+    )
+  }
 }
 
 RangeSelector.propTypes = {

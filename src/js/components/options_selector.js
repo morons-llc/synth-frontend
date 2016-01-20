@@ -1,27 +1,29 @@
 import React, { PropTypes } from 'react'
 import constants from '../constants'
 
-const OptionsSelector = (props) => {
-  function createOption({ optionName, value, checked }) {
+class OptionsSelector extends React.Component {
+  createOption({ optionName, value, checked }) {
     return (
-      <label htmlFor={ props.name }>
-        <input
-          type='radio'
-          key={ props.name + value }
-          value={ value }
-          onChange={ props.onChange }
-          checked={ checked } />
+      <label htmlFor={ this.props.name }>
+      <input
+        type='radio'
+        key={ this.props.name + value }
+        value={ value }
+        onChange={ this.props.onChange }
+        checked={ checked } />
         { optionName }
       </label>
     )
   }
 
-  return (
-    <div className="options-selector">
-      { props.name }
-      { props.options.map(createOption) }
-    </div>
-  )
+  render () {
+    return (
+      <div className="options-selector">
+        { this.props.name }
+        { this.props.options.map(this.createOption.bind(this)) }
+      </div>
+    )
+  }
 }
 
 OptionsSelector.propTypes = {
