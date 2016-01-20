@@ -67,6 +67,29 @@ const PatchApp = (props) => {
     )
   }
 
+  function polaritySelectorFor(path, name) {
+    const options = [
+      {
+        optionName: 'Positive',
+        value: 'positive',
+        checked: valueAt(path) === 'positive'
+      },
+      {
+        optionName: 'Negative',
+        value: 'negative',
+        checked: valueAt(path) === 'negative'
+      }
+    ]
+
+    return (
+      <OptionsSelector
+        name={ name }
+        onChange={ setParam(path, event => event.target.value) }
+        options={ options }
+      />
+    )
+  }
+
   function juno106WaveFormSelector() {
     const pulsePath = 'osc.osc1.pulseWave'
     const triPath = 'osc.osc1.triangleWave'
@@ -117,12 +140,14 @@ const PatchApp = (props) => {
         { rangeSelectorFor('osc.osc1.subOsc', 'Sub') }
         { rangeSelectorFor('osc.osc1.noise', 'Noise') }
         { juno106WaveFormSelector() }
-    </section>
+      </section>
+
       <section className="mod">
         <h2>LFO</h2>
         { rangeSelectorFor('mod.lfo.rate', 'Rate') }
         { rangeSelectorFor('mod.lfo.delay', 'Delay') }
       </section>
+
       <section className="filter">
         <h2>VCF</h2>
         { rangeSelectorFor('filter.frequency', 'Freq') }
@@ -130,11 +155,14 @@ const PatchApp = (props) => {
         { rangeSelectorFor('filter.envelopeAmount', 'Env') }
         { rangeSelectorFor('filter.lfo', 'LFO') }
         { rangeSelectorFor('filter.keyboardTracking', 'KYBD') }
+        { polaritySelector('filter.polarity', 'Polarity') }
       </section>
+
       <section className="HPF">
         <h2>HPF</h2>
         { rangeSelectorFor('filter.hpf', 'Freq') }
       </section>
+
       <section className="envelope">
         <h2>ENV</h2>
         { rangeSelectorFor('envelope.attack', 'A') }
@@ -142,10 +170,12 @@ const PatchApp = (props) => {
         { rangeSelectorFor('envelope.sustain', 'S') }
         { rangeSelectorFor('envelope.release', 'R') }
       </section>
+
       <section className="vca">
         <h2>VCA</h2>
         { rangeSelectorFor('amp.level', 'Level') }
       </section>
+
       <section className="chorus">
         <h2>Chorus</h2>
         { booleanSelectorFor('chorus.disabled', '', 'disabled', 'enabled') }
