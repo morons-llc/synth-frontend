@@ -10,9 +10,9 @@ const initialState = Immutable.fromJS({
                  pwmLevel: 0,
                  noise: 0,
                  subOsc: 0,
-                 waveLength: '8',
+                 waveLength: '16',
                  pulseWave: true,
-                 triangleWave: true,
+                 triangleWave: false,
                  pwmType: 'manual' } },
              mod: { lfo: { rate: 0, delay: 0 } },
              filter:
@@ -28,15 +28,21 @@ const initialState = Immutable.fromJS({
                          sustain: 0,
                          release: 0 },
              amp: { level: 0, modType: 'gate' },
-             chorus: { disabled: false, level: 0 } }
+             chorus: { disabled: true, level: 'I' } }
   }
 })
+
+function setParam(state, paramSpec) {
+  const path = ['currentPatch', 'state'].concat(paramSpec.path.split("."))
+  return state.updateIn(path, () => paramSpec.value)
+}
 
 function PatchAppReducer(state = initialState, action) {
   switch (action.type) {
     case 'SET_PARAM':
-      const path = ['currentPatch', 'state'].concat(action.path.split("."))
-      return state.updateIn(path, () => action.value)
+      return setParam(state, action)
+    case 'SET_PARAMS':
+      return action.params.reduce(setParam, state)
     default:
       return state
   }
