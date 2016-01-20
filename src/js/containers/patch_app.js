@@ -6,6 +6,10 @@ import OptionsSelector from '../components/options_selector'
 
 const rangeMapper = RangeMapper(0, 127, 0, 10)
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 function extractRangeValue(event) {
   return rangeMapper.unmap(parseInt(event.target.value, 10))
 }
@@ -67,19 +71,14 @@ const PatchApp = (props) => {
     )
   }
 
-  function polaritySelectorFor(path, name) {
-    const options = [
-      {
-        optionName: 'Positive',
-        value: 'positive',
-        checked: valueAt(path) === 'positive'
-      },
-      {
-        optionName: 'Negative',
-        value: 'negative',
-        checked: valueAt(path) === 'negative'
+  function enumSelectorFor(path, name, values) {
+    const options = values.map(value => {
+      return {
+        optionName: capitalizeFirstLetter(value),
+        value: value,
+        checked: valueAt(path) === value
       }
-    ]
+    })
 
     return (
       <OptionsSelector
@@ -140,6 +139,8 @@ const PatchApp = (props) => {
         { rangeSelectorFor('osc.osc1.subOsc', 'Sub') }
         { rangeSelectorFor('osc.osc1.noise', 'Noise') }
         { juno106WaveFormSelector() }
+        { enumSelectorFor('osc.osc1.pwmType', 'PWM Type', ['manual', 'lfo']) }
+        { enumSelectorFor('osc.osc1.waveLength', 'Range', ["16", "8", "4"]) }
       </section>
 
       <section className="mod">
@@ -155,7 +156,7 @@ const PatchApp = (props) => {
         { rangeSelectorFor('filter.envelopeAmount', 'Env') }
         { rangeSelectorFor('filter.lfo', 'LFO') }
         { rangeSelectorFor('filter.keyboardTracking', 'KYBD') }
-        { polaritySelector('filter.polarity', 'Polarity') }
+        { enumSelectorFor('filter.polarity', 'Polarity', ['positive', 'negative']) }
       </section>
 
       <section className="HPF">
@@ -174,11 +175,13 @@ const PatchApp = (props) => {
       <section className="vca">
         <h2>VCA</h2>
         { rangeSelectorFor('amp.level', 'Level') }
+        { enumSelectorFor('amp.modType', 'Mod Type', ['gate', 'env']) }
       </section>
 
       <section className="chorus">
         <h2>Chorus</h2>
         { booleanSelectorFor('chorus.disabled', '', 'disabled', 'enabled') }
+        { enumSelectorFor('chorus.level', 'Level', ['I', 'II']) }
       </section>
     </div>
   )
