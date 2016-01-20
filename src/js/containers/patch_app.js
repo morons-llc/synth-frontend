@@ -89,47 +89,6 @@ const PatchApp = (props) => {
     )
   }
 
-  function juno106WaveFormSelector() {
-    const pulsePath = 'osc.osc1.pulseWave'
-    const triPath = 'osc.osc1.triangleWave'
-    const options = [
-      {
-        optionName: 'Pulse Wave',
-        value: pulsePath,
-        checked: valueAt(pulsePath)
-      },
-      {
-        optionName: 'Triangle Wave',
-        value: triPath,
-        checked: valueAt(triPath)
-      }
-    ]
-
-    const update = (event) => {
-      props.dispatch({
-        type: 'SET_PARAMS',
-        params: [
-          {
-            path: pulsePath,
-            value: event.target.value === pulsePath
-          },
-          {
-            path: triPath,
-            value: event.target.value === triPath
-          }
-        ]
-      })
-    }
-
-    return (
-      <OptionsSelector
-        name="Wave Form"
-        onChange={ update }
-        options={ options }
-      />
-    )
-  }
-
   return (
     <div className="synth-control">
       <section className="oscillator">
@@ -138,7 +97,8 @@ const PatchApp = (props) => {
         { rangeSelectorFor('osc.osc1.pwmLevel', 'PWM') }
         { rangeSelectorFor('osc.osc1.subOsc', 'Sub') }
         { rangeSelectorFor('osc.osc1.noise', 'Noise') }
-        { juno106WaveFormSelector() }
+        { booleanSelectorFor('osc.osc1.pulseWave', 'Pulse Wave') }
+        { booleanSelectorFor('osc.osc1.triangleWave', 'Triangle Wave') }
         { enumSelectorFor('osc.osc1.pwmType', 'PWM Type', ['manual', 'lfo']) }
         { enumSelectorFor('osc.osc1.waveLength', 'Range', ["16", "8", "4"]) }
       </section>
