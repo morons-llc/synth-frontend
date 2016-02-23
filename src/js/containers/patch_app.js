@@ -6,6 +6,46 @@ import OptionsSelector from '../components/options_selector'
 
 const rangeMapper = RangeMapper(0, 127, 0, 10)
 
+/* TODO move MIDI code */
+
+var midiAccess;
+var midiOutputPort;
+
+if (navigator.requestMIDIAccess) {
+  navigator
+    .requestMIDIAccess({ sysex: true })
+    .then(onMIDISuccess, onMIDIFailure)
+} else {
+  alert("No MIDI support in your browser.")
+}
+
+// midi functions
+function onMIDISuccess(midi) {
+  midiAccess = midi
+  midiOutputPort = selectMidiPort()
+
+  console.log(midiOutputPort)
+}
+
+function onMIDIFailure(error) {
+  // when we get a failed response, run this code
+  console.log(
+    "No access to MIDI devices or your browser doesn't " +
+    "support WebMIDI API. Please use WebMIDIAPIShim " +
+    error
+  )
+}
+
+function selectMidiPort() {
+  for (var output of midiAccess.outputs.values()) {
+    if (output.name == "MIDI Express XT Port 8") {
+      return output
+    }
+  }
+}
+
+/* end MIDI */
+
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -25,12 +65,28 @@ const PatchApp = (props) => {
 
   function setParam(path, valueExtractor) {
     return (event) => {
+      const extractedValue = valueExtractor(event)
+
       props.dispatch({
         type: 'SET_PARAM',
         path: path,
-        value: valueExtractor(event)
+        value: extractedValue
+      })
+
+      updateSynth({
+        path: path,
+        value: extractedValue
       })
     }
+  }
+
+  function updateSynth({ path, value }) {
+    const channel = 0x00
+    const parameter = 0x05 // frequency, TODO get it from `path`
+    const sysexMessage = [0xF0, 0x41, 0x32, channel, parameter, value, 0xF7]
+
+    console.log("sending " + sysexMessage)
+    midiOutputPort.send(sysexMessage)
   }
 
   function rangeSelectorFor(path, name) {
