@@ -12,6 +12,7 @@ class RangeSelector extends React.Component {
           min={ this.props.minVal || 0 }
           max={ this.props.maxVal || 127 }
           onChange={ this.props.onChange }
+          step='0.1'
           value={ this.props.value }
         />
       </div>
