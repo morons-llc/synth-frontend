@@ -51,7 +51,7 @@ function capitalizeFirstLetter(string) {
 }
 
 function extractRangeValue(event) {
-  return rangeMapper.unmap(parseInt(event.target.value, 10))
+  return rangeMapper.unmap(parseFloat(event.target.value))
 }
 
 function extractBooleanValue(event) {
