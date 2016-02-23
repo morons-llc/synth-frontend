@@ -3,6 +3,8 @@ import RangeMapper from '../util/range_mapper'
 import RangeSelector from '../components/range_selector'
 import { connect } from 'react-redux'
 import OptionsSelector from '../components/options_selector'
+import Immutable from 'immutable'
+import Constants from '../constants'
 
 const rangeMapper = RangeMapper(0, 127, 0, 10)
 
@@ -80,14 +82,67 @@ const PatchApp = (props) => {
     }
   }
 
-  function updateSynth({ path, value }) {
-    const channel = 0x00
-    const parameter = 0x05 // frequency, TODO get it from `path`
-    const roundedValue = Math.round(value)
-    const sysexMessage = [0xF0, 0x41, 0x32, channel, parameter, roundedValue, 0xF7]
+  const NOT_IMPLEMENTED = "nope"
+  const juno106Parameters = Immutable.fromJS(
+    { osc:
+      { osc1:
+        { lfo: 0x02,
+          pwmLevel: 0x03,
+          noise: 0x04,
+          subOsc: 0x0f,
+          waveLength: NOT_IMPLEMENTED,
+          pulseWave: NOT_IMPLEMENTED,
+          triangleWave: NOT_IMPLEMENTED,
+          pwmType: NOT_IMPLEMENTED } },
+          mod: { lfo: { rate: 0x00, delay: 0x01 } },
+          filter:
+            { frequency: 0x05,
+              resonance: 0x06,
+              envelopeAmount: 0x07,
+              lfo: 0x08,
+              keyboardTracking: 0x09,
+              polarity: NOT_IMPLEMENTED,
+              hpf: NOT_IMPLEMENTED },
+              envelope: { attack: 0x0b,
+                decay: 0x0c,
+                sustain: 0x0d,
+                release: 0x0e },
+                amp: { level: 0x0a, modType: NOT_IMPLEMENTED },
+                chorus: { disabled: NOT_IMPLEMENTED, level: NOT_IMPLEMENTED }
+    })
 
-    console.log("sending " + sysexMessage)
-    midiOutputPort.send(sysexMessage)
+  function generateParamChangeMessage({ channel, path, value }) {
+    const parameter = juno106Parameters.getIn(path.split('.'))
+
+    if (!parameter || value == NaN) {
+      return null
+    }
+
+    const rolandId = 0x41
+    const functionType = 0x32 // "when volume controllers or switches are changed"
+
+    return [
+      Constants.sysex.start,
+      rolandId,
+      functionType,
+      channel,
+      parameter,
+      Math.round(value),
+      Constants.sysex.finish
+    ]
+  }
+
+  function updateSynth({ path, value }) {
+    const message = generateParamChangeMessage({
+      channel: 0x00, // TODO configurable
+      path,
+      value
+    })
+
+    if (message) {
+      console.log(message)
+      midiOutputPort.send(message)
+    }
   }
 
   function rangeSelectorFor(path, name) {
