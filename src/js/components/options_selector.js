@@ -4,13 +4,16 @@ import constants from '../constants'
 class OptionsSelector extends React.Component {
   createOption({ optionName, value, checked }) {
     return (
-      <label htmlFor={ this.props.name }>
-      <input
-        type='radio'
-        key={ this.props.name + value }
-        value={ value }
-        onChange={ this.props.onChange }
-        checked={ checked } />
+      <label
+        key={ this.props.name + value + "label" }
+        htmlFor={ this.props.name }>
+        <input
+          type='radio'
+          key={ this.props.name + value }
+          value={ value }
+          onChange={ this.props.onChange }
+          checked={ checked } />
+
         { optionName }
       </label>
     )
