@@ -67,13 +67,13 @@ const PatchApp = (props) => {
     return (event) => {
       const extractedValue = valueExtractor(event)
 
-      props.dispatch({
-        type: 'SET_PARAM',
+      updateSynth({
         path: path,
         value: extractedValue
       })
 
-      updateSynth({
+      props.dispatch({
+        type: 'SET_PARAM',
         path: path,
         value: extractedValue
       })
@@ -83,7 +83,8 @@ const PatchApp = (props) => {
   function updateSynth({ path, value }) {
     const channel = 0x00
     const parameter = 0x05 // frequency, TODO get it from `path`
-    const sysexMessage = [0xF0, 0x41, 0x32, channel, parameter, value, 0xF7]
+    const roundedValue = Math.round(value)
+    const sysexMessage = [0xF0, 0x41, 0x32, channel, parameter, roundedValue, 0xF7]
 
     console.log("sending " + sysexMessage)
     midiOutputPort.send(sysexMessage)
